@@ -1,0 +1,82 @@
+[
+    {
+        "laoName": "ກຳມະກອນ",
+        "englishName": "Worker",
+        "status": true
+    },
+    {
+        "laoName": "ແມ່ບ້ານ",
+        "englishName": "Housekeeper",
+        "status": true
+    },
+    {
+        "laoName": "ອະນາໄມ",
+        "englishName": "Cleaner",
+        "status": true
+    },
+    {
+        "laoName": "ຊ່າງກໍ່ສ້າງ",
+        "englishName": "Buildingcontractor",
+        "status": true
+    },
+    {
+        "laoName": "ຂາຍເຄື່ອງ",
+        "englishName": "Seller",
+        "status": true
+    },
+    {
+        "laoName": "ພະນັກງານບໍລິການ",
+        "englishName": "Servicestaff",
+        "status": true
+    },
+    {
+        "laoName": "ຮປພ",
+        "englishName": "Security",
+        "status": true
+    },
+    {
+        "laoName": "ລ້າງໄພ້",
+        "englishName": "Carddealer",
+        "status": true
+    },
+    {
+        "laoName": "ສົ່ງເຄື່ອງ",
+        "englishName": "Rider",
+        "status": true
+    },
+    {
+        "laoName": "ບໍລິການນວດ",
+        "englishName": "Massage",
+        "status": true
+    },
+    {
+        "laoName": "ລ້ຽງສັດ",
+        "englishName": "Herder",
+        "status": true
+    },
+    {
+        "laoName": "ຄຸມໂຕະໄພ້",
+        "englishName": "Dealercontrol",
+        "status": true
+    },
+    {
+        "laoName": "ປູກຝັງ",
+        "englishName": "Farmer",
+        "status": true
+    },
+    {
+        "laoName": "ຍົກເຄື່ອງ",
+        "englishName": "Labour",
+        "status": true
+    },
+    {
+        "laoName": "ສ້ອມແປງ",
+        "englishName": "Repairman",
+        "status": true
+    },
+    {
+        "laoName": "ຄົນຂັບລົດ",
+        "englishName": "Driver",
+        "status": true
+    }
+]

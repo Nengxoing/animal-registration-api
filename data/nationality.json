@@ -1,0 +1,569 @@
+[
+    {
+        "name": "ສະຫະລັດອາເມລິກາ",
+        "nationality": "American",
+        "code": "USA",
+        "continent": "North America",
+        "status": true
+    },
+    {
+        "name": "ການາດາ",
+        "nationality": "Canadian",
+        "code": "CAN",
+        "continent": "North America",
+        "status": true
+    },
+    {
+        "name": "ມັກຊິໂກ",
+        "nationality": "Mexican",
+        "code": "MEX",
+        "continent": "North America",
+        "status": true
+    },
+    {
+        "name": "ສະຫະລາຊະອານາຈັກ",
+        "nationality": "British",
+        "code": "GBR",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ຝຣັ່ງ",
+        "nationality": "French",
+        "code": "FRA",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ເຢຍລະມັນ",
+        "nationality": "German",
+        "code": "DEU",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ຈີນ",
+        "nationality": "Chinese",
+        "code": "CHN",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ອິນເດຍ",
+        "nationality": "Indian",
+        "code": "IND",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ອອສເຕຣເລຍ",
+        "nationality": "Australian",
+        "code": "AUS",
+        "continent": "Oceania",
+        "status": true
+    },
+    {
+        "name": "ໄທ",
+        "nationality": "Thai",
+        "code": "THA",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ກຳປູເຈຍ",
+        "nationality": "Cambodian",
+        "code": "KHM",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ອິນໂດເນເຊຍ",
+        "nationality": "Indonesian",
+        "code": "IDN",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ສິງກະໂປ",
+        "nationality": "Singaporean",
+        "code": "SGP",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ຟີລິບປິນ",
+        "nationality": "Filipino",
+        "code": "PHL",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ຍີ່ປຸ່ນ",
+        "nationality": "Japanese",
+        "code": "JPN",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ເກົາຫຼີ",
+        "nationality": "South Korean",
+        "code": "KOR",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ເກົາຫຼີເໜືອ",
+        "nationality": "North Korean",
+        "code": "PRK",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ລັດເຊຍ",
+        "nationality": "Russian",
+        "code": "RUS",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ຫວຽດນາມ",
+        "nationality": "Vietnamese",
+        "code": "VNM",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ບຣາຊິນ",
+        "nationality": "Brazilian",
+        "code": "BRA",
+        "continent": "South America",
+        "status": true
+    },
+    {
+        "name": "ອາເຈນຕິນາ",
+        "nationality": "Argentinian",
+        "code": "ARG",
+        "continent": "South America",
+        "status": true
+    },
+    {
+        "name": "ຊິລີ",
+        "nationality": "Chilean",
+        "code": "CHL",
+        "continent": "South America",
+        "status": true
+    },
+    {
+        "name": "ປຣູ",
+        "nationality": "Peruvian",
+        "code": "PER",
+        "continent": "South America",
+        "status": true
+    },
+    {
+        "name": "ໂຄລໍາເບຍ",
+        "nationality": "Colombian",
+        "code": "COL",
+        "continent": "South America",
+        "status": true
+    },
+    {
+        "name": "ເອກົວດໍ",
+        "nationality": "Ecuadorian",
+        "code": "ECU",
+        "continent": "South America",
+        "status": true
+    },
+    {
+        "name": "ເມັກຊິໂກ",
+        "nationality": "Mexican",
+        "code": "MEX",
+        "continent": "North America",
+        "status": true
+    },
+    {
+        "name": "ໂບລິເວຍ",
+        "nationality": "Bolivian",
+        "code": "BOL",
+        "continent": "South America",
+        "status": true
+    },
+    {
+        "name": "ເວເນຊູເອລາ",
+        "nationality": "Venezuelan",
+        "code": "VEN",
+        "continent": "South America",
+        "status": true
+    },
+    {
+        "name": "ປາຣາກວາຍ",
+        "nationality": "Paraguayan",
+        "code": "PRY",
+        "continent": "South America",
+        "status": true
+    },
+    {
+        "name": "ອາລິການາລິດເບີກາ",
+        "nationality": "South African",
+        "code": "ZAF",
+        "continent": "Africa",
+        "status": true
+    },
+    {
+        "name": "ບຸນຍາດ",
+        "nationality": "Indonesian",
+        "code": "IDN",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ຄາຊັກສະຖານ",
+        "nationality": "Kazakh",
+        "code": "KAZ",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ຕຸລະກີ",
+        "nationality": "Turkish",
+        "code": "TUR",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ຟີລິບປິນ",
+        "nationality": "Filipino",
+        "code": "PHL",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ອີຣ່ານ",
+        "nationality": "Iranian",
+        "code": "IRN",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ບາງສາ",
+        "nationality": "Iraqi",
+        "code": "IRQ",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ຊາອຸດີອາຣາເບຍ",
+        "nationality": "Saudi Arabian",
+        "code": "SAU",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ຊີ​ເຣຍ",
+        "nationality": "Syrian",
+        "code": "SYR",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ນໍເວ",
+        "nationality": "Norwegian",
+        "code": "NOR",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ສວີເດນ",
+        "nationality": "Swedish",
+        "code": "SWE",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ເດນມາກ",
+        "nationality": "Danish",
+        "code": "DNK",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ເນເທີແລນ",
+        "nationality": "Dutch",
+        "code": "NLD",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ເອສໂຕເນຍ",
+        "nationality": "Estonian",
+        "code": "EST",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ເຄນຢາ",
+        "nationality": "Kenyan",
+        "code": "KEN",
+        "continent": "Africa",
+        "status": true
+    },
+    {
+        "name": "ອູກັນດາ",
+        "nationality": "Ugandan",
+        "code": "UGA",
+        "continent": "Africa",
+        "status": true
+    },
+    {
+        "name": "ຟິນແລນ",
+        "nationality": "Finnish",
+        "code": "FIN",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ແບນຊິກ",
+        "nationality": "Belgian",
+        "code": "BEL",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ແອລຈີເລຍ",
+        "nationality": "Algerian",
+        "code": "DZA",
+        "continent": "Africa",
+        "status": true
+    },
+    {
+        "name": "ໂຄຣເອເຊຍ",
+        "nationality": "Croatian",
+        "code": "HRV",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ມາລຕາ",
+        "nationality": "Maltese",
+        "code": "MLT",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ສະວິດເຊີແລນ",
+        "nationality": "Swiss",
+        "code": "CHE",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ໄອສແລນ",
+        "nationality": "Icelandic",
+        "code": "ISL",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ອຸສເບກິສຖານ",
+        "nationality": "Uzbek",
+        "code": "UZB",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ທາຈິກິດສະຖານ",
+        "nationality": "Tajik",
+        "code": "TJK",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ເຕີກເມນິສະຖານ",
+        "nationality": "Turkmen",
+        "code": "TKM",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ກີກີສະຖານ",
+        "nationality": "Kyrgyz",
+        "code": "KGZ",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ເນປານ",
+        "nationality": "Nepalese",
+        "code": "NPL",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "Maldives",
+        "nationality": "Maldivian",
+        "code": "MDV",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ພູຖານ",
+        "nationality": "Bhutanese",
+        "code": "BTN",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ມົງໂກເລຍ",
+        "nationality": "Mongolian",
+        "code": "MNG",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ອາເມເນຍ",
+        "nationality": "Armenian",
+        "code": "ARM",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ຈໍເຈຍ",
+        "nationality": "Georgian",
+        "code": "GEO",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ລິທົວເນຍ",
+        "nationality": "Lithuanian",
+        "code": "LTU",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ລັດເວຍ",
+        "nationality": "Latvian",
+        "code": "LVA",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ສະໂລເວເນຍ",
+        "nationality": "Slovenian",
+        "code": "SVN",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ໂປແລນ",
+        "nationality": "Polish",
+        "code": "POL",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ສາທາລະນະລັດເຊັກ",
+        "nationality": "Czech",
+        "code": "CZE",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ສະໂລວາເກຍ",
+        "nationality": "Slovak",
+        "code": "SVK",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ຮັງກາຣີ",
+        "nationality": "Hungarian",
+        "code": "HUN",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ໂຣມາເນຍ",
+        "nationality": "Romanian",
+        "code": "ROU",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ເຊີເບຍ",
+        "nationality": "Serbian",
+        "code": "SRB",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "Bosnia and Herzegovina",
+        "nationality": "Bosnian and Herzegovinian",
+        "code": "BIH",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ບຸນກາຣີ",
+        "nationality": "Bulgarian",
+        "code": "BGR",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ອານບານີ",
+        "nationality": "Albanian",
+        "code": "ALB",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ມອນໂດວາ",
+        "nationality": "Moldovan",
+        "code": "MDA",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ໂຄໂຊໂວ",
+        "nationality": "Kosovar",
+        "code": "XKX",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ມາເຊໂດເນຍເໜືອ",
+        "nationality": "North Macedonian",
+        "code": "MKD",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ມອນເຕເນໂກຣ",
+        "nationality": "Montenegrin",
+        "code": "MNE",
+        "continent": "Europe",
+        "status": true
+    },
+    {
+        "name": "ມາເລເຊຍ",
+        "nationality": "Malaysian",
+        "code": "MYS",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ລາວ",
+        "nationality": "Lao",
+        "code": "LAO",
+        "continent": "Asia",
+        "status": true
+    },
+    {
+        "name": "ມຽນມາ",
+        "nationality": "Myanmar",
+        "code": "MMR",
+        "continent": "Asia",
+        "status": true
+    }
+]

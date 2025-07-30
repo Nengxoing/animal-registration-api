@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "types": [
+      "node",
+      "express"
+    ],
+    "moduleResolution": "NodeNext",
+    "skipLibCheck": true,
+    "rootDir": "./src",
+    "target": "ES2020",
+    "module": "NodeNext",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "noImplicitUseStrict": false,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {}
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/swaggers/registry.ts",
+    "swagger-login.ts",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

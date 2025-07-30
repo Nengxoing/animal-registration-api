@@ -1,0 +1,804 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator dbml {
+  provider            = "prisma-dbml-generator"
+  output              = "../dbml"
+  outputName          = "animal-registration.dbml"
+  projectDatabaseType = "PostgreSQL"
+  projectName         = "Animal Registration"
+  projectNote         = "Animal Registration DB Schema"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id              Int               @id @default(autoincrement())
+  firstName       String
+  lastName        String
+  email           String            @unique
+  phone           String            @unique
+  password        String
+  role            Role              @default(ADMIN)
+  isActive        Boolean           @default(true)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  deletedAt       DateTime?         @db.Timestamp(6)
+  officeId        Int?
+  username        String?           @unique
+  applicationLog  applicationLog[]
+  blacklist       blacklist[]
+  companyLog      companyLog[]
+  currencyLog     currencyLog[]
+  exchangeRateLog exchangeRateLog[]
+  finance         finance[]
+  folderLog       folderLog[]
+  folderPriceLog  folderPriceLog[]
+  officeLog       officeLog[]
+  priceLog        priceLog[]
+  profileLog      profileLog[]
+  refund          refund[]
+  office          office?           @relation(fields: [officeId], references: [id])
+  userLog         userLog[]         @relation("UserLogUser")
+  userOffice      userOffice[]
+
+  @@index([email])
+  @@index([officeId])
+  @@index([createdAt])
+  @@index([updatedAt])
+}
+
+model userOffice {
+  id       Int    @id @default(autoincrement())
+  userId   Int
+  officeId Int
+  office   office @relation(fields: [officeId], references: [id])
+  user     user   @relation(fields: [userId], references: [id])
+}
+
+model folder {
+  id             Int              @id @default(autoincrement())
+  name           String
+  code           String?
+  status         processStatus    @default(DEFAULT)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  deletedAt      DateTime?        @db.Timestamp(6)
+  officeId       Int?
+  billDate       DateTime?        @db.Timestamp(6)
+  billNumber     String?
+  application    application[]
+  finance        finance[]
+  office         office?          @relation(fields: [officeId], references: [id])
+  folderLog      folderLog[]
+  folderPrice    folderPrice[]
+  folderPriceLog folderPriceLog[]
+  folderReject   folderReject[]
+  number         number[]
+  animalExport   animalExport[]
+
+  @@index([officeId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([updatedAt])
+}
+ 
+model animalExport {
+  id               Int      @id @default(autoincrement())
+  folderId         Int
+  animalQuantity   Int
+  animalForSend    Int
+  exportDate       DateTime @default(now())
+  status           String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  folder           folder   @relation(fields: [folderId], references: [id])
+
+  @@map("animalExport")
+}
+
+model folderPrice {
+  id             Int              @id @default(autoincrement())
+  amount         Decimal
+  priceId        Int
+  folderId       Int
+  totalPrice     Decimal?
+  multiple       Decimal?
+  folder         folder           @relation(fields: [folderId], references: [id])
+  price          price            @relation(fields: [priceId], references: [id])
+  folderPriceLog folderPriceLog[]
+
+  @@index([priceId])
+  @@index([folderId])
+}
+
+model folderReject {
+  id        Int                @id @default(autoincrement())
+  comment   String
+  folderId  Int
+  status    FolderRejectStatus @default(REJECTED)
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+  deletedAt DateTime?          @db.Timestamp(6)
+  folder    folder             @relation(fields: [folderId], references: [id])
+
+  @@index([createdAt])
+  @@index([updatedAt])
+}
+
+model folderPriceLog {
+  id            Int         @id @default(autoincrement())
+  folderPriceId Int
+  oldpriceId    Int?
+  changedBy     Int?
+  newpriceId    Int?
+  folderId      Int?
+  oldAmount     Decimal?
+  newAmount     Decimal?
+  action        ActionType
+  changedByUser user?       @relation(fields: [changedBy], references: [id])
+  folder        folder?     @relation(fields: [folderId], references: [id])
+  folderPrice   folderPrice @relation(fields: [folderPriceId], references: [id])
+  newprice      price?      @relation("newprice", fields: [newpriceId], references: [id])
+  oldprice      price?      @relation("oldprice", fields: [oldpriceId], references: [id])
+  price         price[]     @relation("folderPriceLogToprice")
+
+  @@index([folderPriceId])
+  @@index([folderId])
+  @@index([changedBy])
+}
+
+model folderLog {
+  id            Int            @id @default(autoincrement())
+  folderId      Int
+  action        ActionType
+  changedBy     Int
+  changeDate    DateTime       @default(now())
+  oldName       String?
+  newName       String?
+  oldCode       String?
+  newCode       String?
+  oldStatus     processStatus?
+  newStatus     processStatus?
+  changedByUser user           @relation(fields: [changedBy], references: [id])
+  folder        folder         @relation(fields: [folderId], references: [id])
+
+  @@index([folderId])
+  @@index([changedBy])
+  @@index([changeDate])
+}
+
+model number {
+  id          Int           @id @default(autoincrement())
+  number      String
+  priceId     Int?
+  folderId    Int
+  isAvailable Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  deletedAt   DateTime?     @db.Timestamp(6)
+  officeId    Int?
+  application application[]
+  folder      folder        @relation(fields: [folderId], references: [id])
+  office      office?       @relation(fields: [officeId], references: [id])
+  price       price?        @relation(fields: [priceId], references: [id])
+  refund      refund[]
+
+  @@index([folderId])
+  @@index([officeId])
+  @@index([createdAt])
+  @@index([updatedAt])
+}
+
+model profile {
+  id                 Int              @id @default(autoincrement())
+  barcode            BigInt?
+  applicationNumber  String?
+  firstName          String?
+  lastName           String?
+  age                Int
+  weight             Int
+  height             Int
+  breed              String
+  gender             String
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  deletedAt          DateTime?        @db.Timestamp(6)
+  officeId           Int?
+  image              String?
+  oldImage           String?
+  application        application[]
+  profileGallery     profileGallery[]
+  profileLog         profileLog[]
+  refund             refund[]
+
+  @@index([officeId])
+  @@index([createdAt])
+  @@index([updatedAt])
+}
+
+model profileGallery {
+  id        Int       @id @default(autoincrement())
+  profileId Int
+  galleryId Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? @db.Timestamp(6)
+  gallery   gallery   @relation(fields: [galleryId], references: [id])
+  profile   profile   @relation(fields: [profileId], references: [id])
+}
+
+model nationality {
+  id                     Int       @id @default(autoincrement())
+  name                   String
+  nationality            String
+  code                   String
+  continent              String
+  status                 Boolean   @default(true)
+
+  @@index([name])
+  @@index([code])
+}
+
+model profileLog {
+  id             Int        @id @default(autoincrement())
+  profileId      Int
+  action         ActionType
+  changedBy      Int
+  changeDate     DateTime   @default(now())
+  oldFirstName   String?
+  newFirstName   String?
+  oldLastName    String?
+  newLastName    String?
+  oldPhoneNumber String?
+  newPhoneNumber String?
+  changedByUser  user       @relation(fields: [changedBy], references: [id])
+  profile        profile    @relation(fields: [profileId], references: [id])
+
+  @@index([profileId])
+  @@index([changedBy])
+  @@index([changeDate])
+}
+
+model userLog {
+  id         Int        @id @default(autoincrement())
+  userId     Int
+  action     ActionType
+  changedBy  Int
+  changeDate DateTime   @default(now())
+  oldEmail   String?
+  newEmail   String?
+  oldPhone   String?
+  newPhone   String?
+  oldRole    Role?
+  newRole    Role?
+  user       user       @relation("UserLogUser", fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([changedBy])
+  @@index([changeDate])
+}
+
+model office {
+  id           Int            @id @default(autoincrement())
+  name         String
+  provinceId   Int?
+  districtId   Int?
+  village      String
+  status       Boolean        @default(true)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  deletedAt    DateTime?      @db.Timestamp(6)
+  application  application[]
+  company      company[]
+  currency     currency[]
+  exchangeRate exchangeRate[]
+  finance      finance[]
+  folder       folder[]
+  gallery      gallery[]
+  number       number[]
+  district     district?      @relation(fields: [districtId], references: [id])
+  province     province?      @relation(fields: [provinceId], references: [id])
+  officeLog    officeLog[]
+  price        price[]
+  refund       refund[]
+  users        user[]
+  userOffice   userOffice[]
+
+  @@index([provinceId])
+  @@index([districtId])
+  @@index([createdAt])
+  @@index([updatedAt])
+}
+
+model officeLog {
+  id            Int        @id @default(autoincrement())
+  officeId      Int
+  action        ActionType
+  changedBy     Int
+  changeDate    DateTime   @default(now())
+  oldName       String?
+  newName       String?
+  oldStatus     Boolean?
+  newStatus     Boolean?
+  changedByUser user       @relation(fields: [changedBy], references: [id])
+  office        office     @relation(fields: [officeId], references: [id])
+
+  @@index([officeId])
+  @@index([changedBy])
+  @@index([changeDate])
+}
+
+model blacklist {
+  id                Int       @id @default(autoincrement())
+  companyId         Int
+  reason            String
+  blacklistedBy     Int
+  status            Boolean   @default(true)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  deletedAt         DateTime? @db.Timestamp(6)
+  blacklistedByUser user      @relation(fields: [blacklistedBy], references: [id])
+  company           company   @relation(fields: [companyId], references: [id])
+
+
+  @@index([blacklistedBy])
+  @@index([createdAt])
+}
+
+model finance {
+  id             Int           @id @default(autoincrement())
+  folderId       Int
+  amount         Decimal
+  receiptImage   String?
+  rateBase       Decimal?
+  ratePolice     Decimal?
+  exchangeRateId Int?
+  paymentMethod  PaymentMethod @default(CASH)
+  receiptNumber  String?
+  approvedById   Int
+  createdAt      DateTime      @updatedAt
+  updatedAt      DateTime      @updatedAt
+  officeId       Int?
+  approvedByUser user          @relation(fields: [approvedById], references: [id])
+  exchangeRate   exchangeRate? @relation(fields: [exchangeRateId], references: [id])
+  folder         folder        @relation(fields: [folderId], references: [id])
+  office         office?       @relation(fields: [officeId], references: [id])
+
+  @@index([folderId])
+  @@index([approvedById])
+  @@index([officeId])
+  @@index([createdAt])
+}
+
+model processStep {
+  id          Int       @id @default(autoincrement())
+  nextStep    String
+  currentStep String
+  olderStep   String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime? @db.Timestamp(6)
+
+  @@index([currentStep])
+  @@index([nextStep])
+}
+
+model application {
+  id                Int                  @id @default(autoincrement())
+  printCount        Int                  @default(0)
+  numberId          Int
+  profileId         Int
+  folderId          Int
+  positionId        Int
+  companyId         Int?
+  type              applicationType      @default(NEW)
+  status            applicationStatus
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  deletedAt         DateTime?            @db.Timestamp(6)
+  officeId          Int?
+  dependBy          applicationDependBy?
+  villageId         Int?
+  applicationNumber String?
+  company           company?             @relation(fields: [companyId], references: [id])
+  folder            folder               @relation(fields: [folderId], references: [id])
+  number            number               @relation(fields: [numberId], references: [id])
+  office            office?              @relation(fields: [officeId], references: [id])
+  position          position             @relation(fields: [positionId], references: [id])
+  profile           profile              @relation(fields: [profileId], references: [id])
+  village           village?             @relation(fields: [villageId], references: [id])
+  applicationFile   applicationFile[]
+  applicationLog    applicationLog[]
+
+  @@index([numberId]) 
+  @@index([profileId])
+  @@index([folderId])
+  @@index([positionId])
+  @@index([companyId])
+  @@index([officeId])
+  @@index([createdAt])
+  @@index([updatedAt])
+}
+
+model applicationLog {
+  id            Int         @id @default(autoincrement())
+  applicationId Int
+  changedById   Int
+  changeDate    DateTime    @default(now())
+  actionTaken   String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  deletedAt     DateTime?   @db.Timestamp(6)
+  application   application @relation(fields: [applicationId], references: [id])
+  changedByUser user        @relation(fields: [changedById], references: [id])
+
+  @@index([applicationId])
+  @@index([changedById])
+  @@index([changeDate])
+}
+
+model applicationFile {
+  id            Int         @id @default(autoincrement())
+  applicationId Int
+  filePath      String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  name          String?
+  application   application @relation(fields: [applicationId], references: [id])
+}
+
+model position {
+  id          Int           @id @default(autoincrement())
+  englishName String
+  laoName     String
+  status      Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  application application[] 
+
+  @@index([englishName])
+  @@index([laoName])
+}
+
+model company {
+  id                 Int                @id @default(autoincrement())
+  name               String
+  businessCode       String?
+  officeId           Int?
+  businessRegisterBy businessRegisterBy
+  businessType       String?
+  status             Int?               @default(0)
+  application        application[]
+  office             office?            @relation(fields: [officeId], references: [id])
+  companyFile        companyFile[]
+  companyLog         companyLog[]
+  blacklist          blacklist[]
+
+  @@index([officeId])
+  @@index([businessCode])
+  @@index([name])
+}
+
+model companyFile {
+  id        Int       @id @default(autoincrement())
+  file      String
+  name      String?
+  companyId Int?
+  deletedAt DateTime? @db.Timestamp(6)
+  company   company?  @relation(fields: [companyId], references: [id])
+}
+
+model companyLog {
+  id              Int        @id @default(autoincrement())
+  companyId       Int
+  action          ActionType
+  changedBy       Int
+  changeDate      DateTime   @default(now())
+  oldName         String?
+  newName         String?
+  oldBusinessCode String?
+  newBusinessCode String?
+  changedByUser   user       @relation(fields: [changedBy], references: [id])
+  company         company    @relation(fields: [companyId], references: [id])
+
+  @@index([companyId])
+  @@index([changedBy])
+  @@index([changeDate])
+}
+
+model price {
+  id             Int              @id @default(autoincrement())
+  name           String
+  code           String?
+  price          Decimal
+  type           String
+  duration       String?
+  officeId       Int?
+  status         Boolean          @default(true)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  deletedAt      DateTime?        @db.Timestamp(6)
+  folderPrice    folderPrice[]
+  newPriceLogs   folderPriceLog[] @relation("newprice")
+  oldPriceLogs   folderPriceLog[] @relation("oldprice")
+  number         number[]
+  office         office?          @relation(fields: [officeId], references: [id])
+  priceLog       priceLog[]
+  refund         refund[]
+  folderPriceLog folderPriceLog[] @relation("folderPriceLogToprice")
+
+  @@index([officeId])
+  @@index([name])
+  @@index([type])
+  @@index([createdAt])
+}
+
+model priceLog {
+  id            Int        @id @default(autoincrement())
+  priceId       Int
+  action        ActionType
+  changedBy     Int
+  changeDate    DateTime   @default(now())
+  oldPrice      Decimal?
+  newPrice      Decimal?
+  oldName       String?
+  newName       String?
+  changedByUser user       @relation(fields: [changedBy], references: [id])
+  price         price      @relation(fields: [priceId], references: [id])
+
+  @@index([priceId])
+  @@index([changedBy])
+  @@index([changeDate])
+}
+
+model province {
+  id              Int        @id
+  provinceLao     String
+  provinceEnglish String
+  status          Boolean    @default(true)
+  district        district[]
+  office          office[]
+
+  @@index([provinceLao])
+  @@index([provinceEnglish])
+}
+
+model district {
+  id              Int       @id @default(autoincrement())
+  districtLao     String
+  districtEnglish String
+  provinceId      Int
+  status          Boolean   @default(true)
+  province        province  @relation(fields: [provinceId], references: [id])
+  office          office[]
+  village         village[]
+
+  @@index([provinceId])
+  @@index([districtLao])
+  @@index([districtEnglish])
+}
+
+model village {
+  id             Int           @id @default(autoincrement())
+  villageLao     String
+  villageEnglish String
+  districtId     Int
+  status         Boolean       @default(true)
+  application    application[]
+  district       district      @relation(fields: [districtId], references: [id])
+}
+
+model gallery {
+  id             Int              @id @default(autoincrement())
+  name           String
+  image          String?
+  officeId       Int?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  deletedAt      DateTime?        @db.Timestamp(6)
+  office         office?          @relation(fields: [officeId], references: [id])
+  profileGallery profileGallery[]
+}
+
+model refund {
+  id          Int           @id @default(autoincrement())
+  numberId    Int
+  officeId    Int?
+  priceAmount Decimal
+  priceId     Int
+  createById  Int?
+  profileId   Int?
+  comment     String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  deletedAt   DateTime?     @db.Timestamp(6)
+  createBy    user?         @relation(fields: [createById], references: [id])
+  number      number        @relation(fields: [numberId], references: [id])
+  office      office?       @relation(fields: [officeId], references: [id])
+  price       price         @relation(fields: [priceId], references: [id])
+  profile     profile?      @relation(fields: [profileId], references: [id])
+  refundImage refundImage[]
+
+  @@index([createById])
+  @@index([createdAt])
+}
+
+model currency {
+  id                    Int            @id @default(autoincrement())
+  code                  String?
+  name                  String
+  symbol                String?
+  status                Boolean        @default(true)
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  deletedAt             DateTime?      @db.Timestamp(6)
+  officeId              Int?
+  office                office?        @relation(fields: [officeId], references: [id])
+  currencyLog           currencyLog[]
+  exchangeRatesAsBase   exchangeRate[] @relation("baseCurrency")
+  exchangeRatesAsTarget exchangeRate[] @relation("targetCurrency")
+}
+
+model currencyLog {
+  id            Int        @id @default(autoincrement())
+  currencyId    Int
+  action        ActionType
+  changedBy     Int
+  changeDate    DateTime   @default(now())
+  oldCode       String?
+  newCode       String?
+  oldName       String?
+  newName       String?
+  oldSymbol     String?
+  newSymbol     String?
+  oldStatus     Boolean?
+  newStatus     Boolean?
+  changedByUser user       @relation(fields: [changedBy], references: [id])
+  currency      currency   @relation(fields: [currencyId], references: [id])
+
+  @@index([currencyId])
+  @@index([changedBy])
+  @@index([changeDate])
+}
+
+model exchangeRate {
+  id               Int               @id @default(autoincrement())
+  baseCurrencyId   Int
+  targetCurrencyId Int
+  rateBase         Decimal
+  ratePolice       Decimal
+  startDate        DateTime
+  endDate          DateTime?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  deletedAt        DateTime?         @db.Timestamp(6)
+  officeId         Int?
+  status           Boolean           @default(true)
+  name             String?
+  baseCurrency     currency          @relation("baseCurrency", fields: [baseCurrencyId], references: [id])
+  office           office?           @relation(fields: [officeId], references: [id])
+  targetCurrency   currency          @relation("targetCurrency", fields: [targetCurrencyId], references: [id])
+  exchangeRateLog  exchangeRateLog[]
+  finance          finance[]
+
+  @@index([baseCurrencyId])
+  @@index([targetCurrencyId])
+  @@index([baseCurrencyId, targetCurrencyId, startDate])
+}
+
+model exchangeRateLog {
+  id                  Int          @id @default(autoincrement())
+  exchangeRateId      Int
+  action              ActionType
+  changedBy           Int
+  changeDate          DateTime     @default(now())
+  oldBaseCurrencyId   Int?
+  newBaseCurrencyId   Int?
+  oldTargetCurrencyId Int?
+  newTargetCurrencyId Int?
+  oldRate             Decimal?
+  newRate             Decimal?
+  oldStartDate        DateTime?
+  newStartDate        DateTime?
+  oldEndDate          DateTime?
+  newEndDate          DateTime?
+  changedByUser       user         @relation(fields: [changedBy], references: [id])
+  exchangeRate        exchangeRate @relation(fields: [exchangeRateId], references: [id])
+
+  @@index([exchangeRateId])
+  @@index([changedBy])
+  @@index([changeDate])
+}
+
+model refundImage {
+  id       Int     @id @default(autoincrement())
+  image    String
+  refundId Int?
+  refund   refund? @relation(fields: [refundId], references: [id])
+}
+
+enum businessRegisterBy {
+  government
+  ministry
+  province
+  district
+}
+
+
+
+enum processStatus {
+  DEFAULT
+  PENDING
+  APPROVED_BY_POLICE
+  FINANCE_UNDER_REVIEW
+  POLICE_UNDER_REVIEW
+  IN_PRODUCTION
+  FINISHED
+  REJECTED
+}
+
+enum applicationStatus {
+  DEFAULT
+  APPROVED
+  PROCESS
+  FINISHED
+}
+
+enum applicationType {
+  NEW
+  RENEW
+}
+
+enum Role {
+  ADMIN
+  FINANCE
+  POLICE_OFFICER
+  POLICE_COMMANDER
+  POLICE_PRODUCTION
+  VERSIFICATION_OFFICER
+  FARMER
+  SUPER_ADMIN
+
+  @@map("Role")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum PaymentMethod {
+  CASH
+  MONEY_TRANSFER
+}
+
+enum ActionType {
+  CREATE
+  UPDATE
+  DELETE
+  PATCH
+}
+
+enum FolderRejectStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum applicationDependBy {
+  COMPANY
+  VILLAGE
+}
+
+model category {
+  id        Int      @id @default(autoincrement())
+  name      String
+  status    Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

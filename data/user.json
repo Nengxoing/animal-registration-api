@@ -1,0 +1,51 @@
+[
+    {
+        "firstName": "admin",
+        "username": "admin",
+        "lastName": "01",
+        "phone": "59684710",
+        "email": "admin@gmail.com",
+        "password": "Lit@2024",
+        "role": "ADMIN"
+    },
+    {
+        "firstName": "koun",
+        "lastName": "inthavong",
+        "username": "finance",
+        "phone": "59684711",
+        "email": "kouninthavong@gmail.com",
+        "password": "Lit@2024",
+        "officeId": 1,
+        "role": "FINANCE"
+    },
+    {
+        "firstName": "Vilakone",
+        "lastName": "Jung",
+        "username": "officer",
+        "phone": "59684712",
+        "email": "vilakonejung@gmail.com",
+        "password": "Lit@2024",
+        "officeId": 1,
+        "role": "POLICE_OFFICER"
+    },
+    {
+        "firstName": "Thavisouk",
+        "lastName": "Minalavong",
+        "username": "commander",
+        "phone": "59684713",
+        "email": "thavisoukmnlv@gmail.com",
+        "password": "Lit@2024",
+        "officeId": 1,
+        "role": "POLICE_COMMANDER"
+    },
+    {
+        "firstName": "meng",
+        "lastName": "mua",
+        "username": "production",
+        "phone": "59684714",
+        "email": "mengmua@gmail.com",
+        "password": "Lit@2024",
+        "officeId": 1,
+        "role": "POLICE_PRODUCTION"
+    }
+]

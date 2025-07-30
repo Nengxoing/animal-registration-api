@@ -1,0 +1,808 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Project "Animal Registration" {
+  database_type: 'PostgreSQL'
+  Note: 'Animal Registration DB Schema'
+}
+
+Table user {
+  id Int [pk, increment]
+  firstName String [not null]
+  lastName String [not null]
+  email String [unique, not null]
+  phone String [unique, not null]
+  password String [not null]
+  role Role [not null, default: 'ADMIN']
+  isActive Boolean [not null, default: true]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deletedAt DateTime
+  officeId Int
+  username String [unique]
+  applicationLog applicationLog [not null]
+  blacklist blacklist [not null]
+  companyLog companyLog [not null]
+  currencyLog currencyLog [not null]
+  exchangeRateLog exchangeRateLog [not null]
+  finance finance [not null]
+  folderLog folderLog [not null]
+  folderPriceLog folderPriceLog [not null]
+  officeLog officeLog [not null]
+  priceLog priceLog [not null]
+  profileLog profileLog [not null]
+  refund refund [not null]
+  office office
+  userLog userLog [not null]
+  userOffice userOffice [not null]
+}
+
+Table userOffice {
+  id Int [pk, increment]
+  userId Int [not null]
+  officeId Int [not null]
+  office office [not null]
+  user user [not null]
+}
+
+Table folder {
+  id Int [pk, increment]
+  name String [not null]
+  code String
+  status processStatus [not null, default: 'DEFAULT']
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deletedAt DateTime
+  officeId Int
+  billDate DateTime
+  billNumber String
+  application application [not null]
+  finance finance [not null]
+  office office
+  folderLog folderLog [not null]
+  folderPrice folderPrice [not null]
+  folderPriceLog folderPriceLog [not null]
+  folderReject folderReject [not null]
+  number number [not null]
+  animalExport animalExport [not null]
+}
+
+Table animalExport {
+  id Int [pk, increment]
+  folderId Int [not null]
+  animalQuantity Int [not null]
+  animalForSend Int [not null]
+  exportDate DateTime [default: `now()`, not null]
+  status String [not null, default: 'PENDING']
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  folder folder [not null]
+}
+
+Table folderPrice {
+  id Int [pk, increment]
+  amount Decimal [not null]
+  priceId Int [not null]
+  folderId Int [not null]
+  totalPrice Decimal
+  multiple Decimal
+  folder folder [not null]
+  price price [not null]
+  folderPriceLog folderPriceLog [not null]
+}
+
+Table folderReject {
+  id Int [pk, increment]
+  comment String [not null]
+  folderId Int [not null]
+  status FolderRejectStatus [not null, default: 'REJECTED']
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deletedAt DateTime
+  folder folder [not null]
+}
+
+Table folderPriceLog {
+  id Int [pk, increment]
+  folderPriceId Int [not null]
+  oldpriceId Int
+  changedBy Int
+  newpriceId Int
+  folderId Int
+  oldAmount Decimal
+  newAmount Decimal
+  action ActionType [not null]
+  changedByUser user
+  folder folder
+  folderPrice folderPrice [not null]
+  newprice price
+  oldprice price
+  price price [not null]
+}
+
+Table folderLog {
+  id Int [pk, increment]
+  folderId Int [not null]
+  action ActionType [not null]
+  changedBy Int [not null]
+  changeDate DateTime [default: `now()`, not null]
+  oldName String
+  newName String
+  oldCode String
+  newCode String
+  oldStatus processStatus
+  newStatus processStatus
+  changedByUser user [not null]
+  folder folder [not null]
+}
+
+Table number {
+  id Int [pk, increment]
+  number String [not null]
+  priceId Int
+  folderId Int [not null]
+  isAvailable Boolean [not null, default: true]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deletedAt DateTime
+  officeId Int
+  application application [not null]
+  folder folder [not null]
+  office office
+  price price
+  refund refund [not null]
+}
+
+Table profile {
+  id Int [pk, increment]
+  barcode BigInt
+  applicationNumber String
+  firstName String
+  lastName String
+  age Int [not null]
+  weight Int [not null]
+  height Int [not null]
+  breed String [not null]
+  gender String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deletedAt DateTime
+  officeId Int
+  image String
+  oldImage String
+  application application [not null]
+  profileGallery profileGallery [not null]
+  profileLog profileLog [not null]
+  refund refund [not null]
+}
+
+Table profileGallery {
+  id Int [pk, increment]
+  profileId Int [not null]
+  galleryId Int [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deletedAt DateTime
+  gallery gallery [not null]
+  profile profile [not null]
+}
+
+Table nationality {
+  id Int [pk, increment]
+  name String [not null]
+  nationality String [not null]
+  code String [not null]
+  continent String [not null]
+  status Boolean [not null, default: true]
+}
+
+Table profileLog {
+  id Int [pk, increment]
+  profileId Int [not null]
+  action ActionType [not null]
+  changedBy Int [not null]
+  changeDate DateTime [default: `now()`, not null]
+  oldFirstName String
+  newFirstName String
+  oldLastName String
+  newLastName String
+  oldPhoneNumber String
+  newPhoneNumber String
+  changedByUser user [not null]
+  profile profile [not null]
+}
+
+Table userLog {
+  id Int [pk, increment]
+  userId Int [not null]
+  action ActionType [not null]
+  changedBy Int [not null]
+  changeDate DateTime [default: `now()`, not null]
+  oldEmail String
+  newEmail String
+  oldPhone String
+  newPhone String
+  oldRole Role
+  newRole Role
+  user user [not null]
+}
+
+Table office {
+  id Int [pk, increment]
+  name String [not null]
+  provinceId Int
+  districtId Int
+  village String [not null]
+  status Boolean [not null, default: true]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deletedAt DateTime
+  application application [not null]
+  company company [not null]
+  currency currency [not null]
+  exchangeRate exchangeRate [not null]
+  finance finance [not null]
+  folder folder [not null]
+  gallery gallery [not null]
+  number number [not null]
+  district district
+  province province
+  officeLog officeLog [not null]
+  price price [not null]
+  refund refund [not null]
+  users user [not null]
+  userOffice userOffice [not null]
+}
+
+Table officeLog {
+  id Int [pk, increment]
+  officeId Int [not null]
+  action ActionType [not null]
+  changedBy Int [not null]
+  changeDate DateTime [default: `now()`, not null]
+  oldName String
+  newName String
+  oldStatus Boolean
+  newStatus Boolean
+  changedByUser user [not null]
+  office office [not null]
+}
+
+Table blacklist {
+  id Int [pk, increment]
+  companyId Int [not null]
+  reason String [not null]
+  blacklistedBy Int [not null]
+  status Boolean [not null, default: true]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deletedAt DateTime
+  blacklistedByUser user [not null]
+  company company [not null]
+}
+
+Table finance {
+  id Int [pk, increment]
+  folderId Int [not null]
+  amount Decimal [not null]
+  receiptImage String
+  rateBase Decimal
+  ratePolice Decimal
+  exchangeRateId Int
+  paymentMethod PaymentMethod [not null, default: 'CASH']
+  receiptNumber String
+  approvedById Int [not null]
+  createdAt DateTime [not null]
+  updatedAt DateTime [not null]
+  officeId Int
+  approvedByUser user [not null]
+  exchangeRate exchangeRate
+  folder folder [not null]
+  office office
+}
+
+Table processStep {
+  id Int [pk, increment]
+  nextStep String [not null]
+  currentStep String [not null]
+  olderStep String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deletedAt DateTime
+}
+
+Table application {
+  id Int [pk, increment]
+  printCount Int [not null, default: 0]
+  numberId Int [not null]
+  profileId Int [not null]
+  folderId Int [not null]
+  positionId Int [not null]
+  companyId Int
+  type applicationType [not null, default: 'NEW']
+  status applicationStatus [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deletedAt DateTime
+  officeId Int
+  dependBy applicationDependBy
+  villageId Int
+  applicationNumber String
+  company company
+  folder folder [not null]
+  number number [not null]
+  office office
+  position position [not null]
+  profile profile [not null]
+  village village
+  applicationFile applicationFile [not null]
+  applicationLog applicationLog [not null]
+}
+
+Table applicationLog {
+  id Int [pk, increment]
+  applicationId Int [not null]
+  changedById Int [not null]
+  changeDate DateTime [default: `now()`, not null]
+  actionTaken String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deletedAt DateTime
+  application application [not null]
+  changedByUser user [not null]
+}
+
+Table applicationFile {
+  id Int [pk, increment]
+  applicationId Int [not null]
+  filePath String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  name String
+  application application [not null]
+}
+
+Table position {
+  id Int [pk, increment]
+  englishName String [not null]
+  laoName String [not null]
+  status Boolean [not null, default: true]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  application application [not null]
+}
+
+Table company {
+  id Int [pk, increment]
+  name String [not null]
+  businessCode String
+  officeId Int
+  businessRegisterBy businessRegisterBy [not null]
+  businessType String
+  status Int [default: 0]
+  application application [not null]
+  office office
+  companyFile companyFile [not null]
+  companyLog companyLog [not null]
+  blacklist blacklist [not null]
+}
+
+Table companyFile {
+  id Int [pk, increment]
+  file String [not null]
+  name String
+  companyId Int
+  deletedAt DateTime
+  company company
+}
+
+Table companyLog {
+  id Int [pk, increment]
+  companyId Int [not null]
+  action ActionType [not null]
+  changedBy Int [not null]
+  changeDate DateTime [default: `now()`, not null]
+  oldName String
+  newName String
+  oldBusinessCode String
+  newBusinessCode String
+  changedByUser user [not null]
+  company company [not null]
+}
+
+Table price {
+  id Int [pk, increment]
+  name String [not null]
+  code String
+  price Decimal [not null]
+  type String [not null]
+  duration String
+  officeId Int
+  status Boolean [not null, default: true]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deletedAt DateTime
+  folderPrice folderPrice [not null]
+  newPriceLogs folderPriceLog [not null]
+  oldPriceLogs folderPriceLog [not null]
+  number number [not null]
+  office office
+  priceLog priceLog [not null]
+  refund refund [not null]
+  folderPriceLog folderPriceLog [not null]
+}
+
+Table priceLog {
+  id Int [pk, increment]
+  priceId Int [not null]
+  action ActionType [not null]
+  changedBy Int [not null]
+  changeDate DateTime [default: `now()`, not null]
+  oldPrice Decimal
+  newPrice Decimal
+  oldName String
+  newName String
+  changedByUser user [not null]
+  price price [not null]
+}
+
+Table province {
+  id Int [pk]
+  provinceLao String [not null]
+  provinceEnglish String [not null]
+  status Boolean [not null, default: true]
+  district district [not null]
+  office office [not null]
+}
+
+Table district {
+  id Int [pk, increment]
+  districtLao String [not null]
+  districtEnglish String [not null]
+  provinceId Int [not null]
+  status Boolean [not null, default: true]
+  province province [not null]
+  office office [not null]
+  village village [not null]
+}
+
+Table village {
+  id Int [pk, increment]
+  villageLao String [not null]
+  villageEnglish String [not null]
+  districtId Int [not null]
+  status Boolean [not null, default: true]
+  application application [not null]
+  district district [not null]
+}
+
+Table gallery {
+  id Int [pk, increment]
+  name String [not null]
+  image String
+  officeId Int
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deletedAt DateTime
+  office office
+  profileGallery profileGallery [not null]
+}
+
+Table refund {
+  id Int [pk, increment]
+  numberId Int [not null]
+  officeId Int
+  priceAmount Decimal [not null]
+  priceId Int [not null]
+  createById Int
+  profileId Int
+  comment String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deletedAt DateTime
+  createBy user
+  number number [not null]
+  office office
+  price price [not null]
+  profile profile
+  refundImage refundImage [not null]
+}
+
+Table currency {
+  id Int [pk, increment]
+  code String
+  name String [not null]
+  symbol String
+  status Boolean [not null, default: true]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deletedAt DateTime
+  officeId Int
+  office office
+  currencyLog currencyLog [not null]
+  exchangeRatesAsBase exchangeRate [not null]
+  exchangeRatesAsTarget exchangeRate [not null]
+}
+
+Table currencyLog {
+  id Int [pk, increment]
+  currencyId Int [not null]
+  action ActionType [not null]
+  changedBy Int [not null]
+  changeDate DateTime [default: `now()`, not null]
+  oldCode String
+  newCode String
+  oldName String
+  newName String
+  oldSymbol String
+  newSymbol String
+  oldStatus Boolean
+  newStatus Boolean
+  changedByUser user [not null]
+  currency currency [not null]
+}
+
+Table exchangeRate {
+  id Int [pk, increment]
+  baseCurrencyId Int [not null]
+  targetCurrencyId Int [not null]
+  rateBase Decimal [not null]
+  ratePolice Decimal [not null]
+  startDate DateTime [not null]
+  endDate DateTime
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deletedAt DateTime
+  officeId Int
+  status Boolean [not null, default: true]
+  name String
+  baseCurrency currency [not null]
+  office office
+  targetCurrency currency [not null]
+  exchangeRateLog exchangeRateLog [not null]
+  finance finance [not null]
+}
+
+Table exchangeRateLog {
+  id Int [pk, increment]
+  exchangeRateId Int [not null]
+  action ActionType [not null]
+  changedBy Int [not null]
+  changeDate DateTime [default: `now()`, not null]
+  oldBaseCurrencyId Int
+  newBaseCurrencyId Int
+  oldTargetCurrencyId Int
+  newTargetCurrencyId Int
+  oldRate Decimal
+  newRate Decimal
+  oldStartDate DateTime
+  newStartDate DateTime
+  oldEndDate DateTime
+  newEndDate DateTime
+  changedByUser user [not null]
+  exchangeRate exchangeRate [not null]
+}
+
+Table refundImage {
+  id Int [pk, increment]
+  image String [not null]
+  refundId Int
+  refund refund
+}
+
+Table category {
+  id Int [pk, increment]
+  name String [not null]
+  status Boolean [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table folderPriceLogToprice {
+  priceId Int [ref: > price.id]
+  folderpricelogId Int [ref: > folderPriceLog.id]
+}
+
+Enum businessRegisterBy {
+  government
+  ministry
+  province
+  district
+}
+
+Enum processStatus {
+  DEFAULT
+  PENDING
+  APPROVED_BY_POLICE
+  FINANCE_UNDER_REVIEW
+  POLICE_UNDER_REVIEW
+  IN_PRODUCTION
+  FINISHED
+  REJECTED
+}
+
+Enum applicationStatus {
+  DEFAULT
+  APPROVED
+  PROCESS
+  FINISHED
+}
+
+Enum applicationType {
+  NEW
+  RENEW
+}
+
+Enum Role {
+  ADMIN
+  FINANCE
+  POLICE_OFFICER
+  POLICE_COMMANDER
+  POLICE_PRODUCTION
+  VERSIFICATION_OFFICER
+  FARMER
+  SUPER_ADMIN
+}
+
+Enum Gender {
+  MALE
+  FEMALE
+}
+
+Enum PaymentMethod {
+  CASH
+  MONEY_TRANSFER
+}
+
+Enum ActionType {
+  CREATE
+  UPDATE
+  DELETE
+  PATCH
+}
+
+Enum FolderRejectStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+Enum applicationDependBy {
+  COMPANY
+  VILLAGE
+}
+
+Ref: user.officeId > office.id
+
+Ref: userOffice.officeId > office.id
+
+Ref: userOffice.userId > user.id
+
+Ref: folder.officeId > office.id
+
+Ref: animalExport.folderId > folder.id
+
+Ref: folderPrice.folderId > folder.id
+
+Ref: folderPrice.priceId > price.id
+
+Ref: folderReject.folderId > folder.id
+
+Ref: folderPriceLog.changedBy > user.id
+
+Ref: folderPriceLog.folderId > folder.id
+
+Ref: folderPriceLog.folderPriceId > folderPrice.id
+
+Ref: folderPriceLog.newpriceId > price.id
+
+Ref: folderPriceLog.oldpriceId > price.id
+
+Ref: folderLog.changedBy > user.id
+
+Ref: folderLog.folderId > folder.id
+
+Ref: number.folderId > folder.id
+
+Ref: number.officeId > office.id
+
+Ref: number.priceId > price.id
+
+Ref: profileGallery.galleryId > gallery.id
+
+Ref: profileGallery.profileId > profile.id
+
+Ref: profileLog.changedBy > user.id
+
+Ref: profileLog.profileId > profile.id
+
+Ref: userLog.userId > user.id
+
+Ref: office.districtId > district.id
+
+Ref: office.provinceId > province.id
+
+Ref: officeLog.changedBy > user.id
+
+Ref: officeLog.officeId > office.id
+
+Ref: blacklist.blacklistedBy > user.id
+
+Ref: blacklist.companyId > company.id
+
+Ref: finance.approvedById > user.id
+
+Ref: finance.exchangeRateId > exchangeRate.id
+
+Ref: finance.folderId > folder.id
+
+Ref: finance.officeId > office.id
+
+Ref: application.companyId > company.id
+
+Ref: application.folderId > folder.id
+
+Ref: application.numberId > number.id
+
+Ref: application.officeId > office.id
+
+Ref: application.positionId > position.id
+
+Ref: application.profileId > profile.id
+
+Ref: application.villageId > village.id
+
+Ref: applicationLog.applicationId > application.id
+
+Ref: applicationLog.changedById > user.id
+
+Ref: applicationFile.applicationId > application.id
+
+Ref: company.officeId > office.id
+
+Ref: companyFile.companyId > company.id
+
+Ref: companyLog.changedBy > user.id
+
+Ref: companyLog.companyId > company.id
+
+Ref: price.officeId > office.id
+
+Ref: priceLog.changedBy > user.id
+
+Ref: priceLog.priceId > price.id
+
+Ref: district.provinceId > province.id
+
+Ref: village.districtId > district.id
+
+Ref: gallery.officeId > office.id
+
+Ref: refund.createById > user.id
+
+Ref: refund.numberId > number.id
+
+Ref: refund.officeId > office.id
+
+Ref: refund.priceId > price.id
+
+Ref: refund.profileId > profile.id
+
+Ref: currency.officeId > office.id
+
+Ref: currencyLog.changedBy > user.id
+
+Ref: currencyLog.currencyId > currency.id
+
+Ref: exchangeRate.baseCurrencyId > currency.id
+
+Ref: exchangeRate.officeId > office.id
+
+Ref: exchangeRate.targetCurrencyId > currency.id
+
+Ref: exchangeRateLog.changedBy > user.id
+
+Ref: exchangeRateLog.exchangeRateId > exchangeRate.id
+
+Ref: refundImage.refundId > refund.id
